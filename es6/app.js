@@ -1,14 +1,15 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
 // const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-
-const routes = require('./routes/index');
-const users = require('./routes/users');
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import routes from './routes/index';
+import users from './routes/users';
 
 const app = express();
+mongoose.connect('mongodb://localhost/jsonAPI');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

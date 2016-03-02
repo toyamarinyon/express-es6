@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 /* eslint-disable new-cap */
 const router = express.Router();
 /* eslint-enable new-cap */
