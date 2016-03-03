@@ -1,11 +1,9 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import user from '../models/user.js';
-
 /* eslint-disable new-cap */
+
+import express from 'express';
+import User from '../models/user.js';
+
 const router = express.Router();
-/* eslint-enable new-cap */
-const User = mongoose.model('User');
 
 /* GET users listing. */
 router.get('/', (req, res) => {
@@ -16,9 +14,9 @@ router.post('/new', (req, res) => {
   const user = new User(req.body);
   user.save((err) => {
     if (err) {
-      res.send(err);
+      return res.send(err);
     }
-    res.join({ message: 'User created!' });
+    return res.json({ message: 'User created!' });
   });
 });
 
