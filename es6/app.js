@@ -5,8 +5,11 @@ import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import session from 'express-session';
+import passport from 'passport';
 import routes from './routes/index';
 import users from './routes/users';
+import authentications from './routes/authentications';
 
 const app = express();
 mongoose.connect('mongodb://localhost/jsonAPI');
@@ -22,9 +25,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'redbull',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30 * 60 * 1000 }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/login', authentications);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
