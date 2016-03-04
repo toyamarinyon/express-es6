@@ -12,11 +12,12 @@ router.get('/', (req, res) => {
 
 router.post('/new', (req, res) => {
   const user = new User(req.body);
-  user.save((err) => {
-    if (err) {
-      return res.send(err);
-    }
-    return res.json({ message: 'User created!' });
+  user.save((saveErr) => {
+    if (saveErr) return res.send(saveErr);
+    req.login(user, (loginErr) => {
+      if (loginErr) return res.send(loginErr);
+      return res.json({ message: 'User created!' });
+    });
   });
 });
 

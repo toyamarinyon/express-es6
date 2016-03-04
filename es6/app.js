@@ -14,6 +14,9 @@ import authentications from './routes/authentications';
 const app = express();
 mongoose.connect('mongodb://localhost/jsonAPI');
 
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser((id, done) => done(null, id));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
